@@ -90,7 +90,7 @@ Every response includes per-agent timings, so the UI can show which agent was sl
 cd backend && pytest -q
 ```
 
-12 backend tests cover the text parser, ranking, memory recall (including session isolation), and the orchestrator against the real MCP servers: all three agents answering, parallel beating sequential, and a timed-out agent not failing the search.
+13 backend tests cover the text parser, ranking, memory recall (including session isolation), and the orchestrator against the real MCP servers: all three agents answering, parallel beating sequential, and a timed-out agent not failing the search.
 
 CI also builds the frontend, starts the API and UI, and runs `e2e/smoke.py`: a real browser searches through the UI, checks that all three agents answered and every price is under budget, then runs a related search and checks that memory recalls the first one.
 

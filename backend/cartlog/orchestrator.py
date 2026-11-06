@@ -8,6 +8,7 @@ never takes down the whole search.
 """
 import asyncio
 import json
+import os
 import sys
 import time
 from contextlib import AsyncExitStack
@@ -74,7 +75,10 @@ class Orchestrator:
         await self._stack.__aenter__()
 
         async def connect(spec: AgentSpec):
-            params = StdioServerParameters(command=sys.executable, args=[str(SERVERS_DIR / spec.script)])
+            # Pass our environment through: the MCP client otherwise gives servers only a
+            # minimal one, and the agents would never see API keys or mock settings.
+            params = StdioServerParameters(command=sys.executable, args=[str(SERVERS_DIR / spec.script)],
+                                           env=dict(os.environ))
             read, write = await self._stack.enter_async_context(stdio_client(params))
             session = await self._stack.enter_async_context(ClientSession(read, write))
             await session.initialize()
