@@ -1,5 +1,7 @@
 # CartLog AI
 
+![CI](https://github.com/ArunaSamhitha/CartLog-AI/actions/workflows/ci.yml/badge.svg)
+
 A multimodal shopping assistant. Point your phone camera at a product, or type what you want. A vision-language model turns the photo into a structured search. A research agent, an eBay agent and an Amazon agent then search **at the same time** over the Model Context Protocol (MCP), and the results come back as one ranked list.
 
 It runs end to end with **no API keys**. Every agent falls back to deterministic mock data, so you can clone it and try it in two minutes.
@@ -88,7 +90,9 @@ Every response includes per-agent timings, so the UI can show which agent was sl
 cd backend && pytest -q
 ```
 
-12 tests cover the text parser, ranking, memory recall (including session isolation), and the orchestrator against the real MCP servers: all three agents answering, parallel beating sequential, and a timed-out agent not failing the search.
+12 backend tests cover the text parser, ranking, memory recall (including session isolation), and the orchestrator against the real MCP servers: all three agents answering, parallel beating sequential, and a timed-out agent not failing the search.
+
+CI also builds the frontend, starts the API and UI, and runs `e2e/smoke.py`: a real browser searches through the UI, checks that all three agents answered and every price is under budget, then runs a related search and checks that memory recalls the first one.
 
 ## Project layout
 
